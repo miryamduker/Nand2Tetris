@@ -1,0 +1,133 @@
+ class Game{
+	field Creature creature;
+	field Random random;
+	field Tree tree, tree1, tree2,tree3,tree4,tree5;
+	field int direction,tick,counter,speed,tock,duration,wait,score;
+	field boolean isUp,exit,isOutOfRange;
+	field Array trees;
+
+	//constructor
+	constructor Game new(){
+		let creature=Creature.new(80,224);
+		let direction=0;
+		let tree = Tree.new(511,224);
+		let tree1=Tree.new(400,224);
+		let tree2=Tree.new(300,224);
+		let isUp=false;
+		let tick=0;
+		let tock=0;
+		let isOutOfRange=false;
+		let exit=false;
+		let speed = 10;
+		let counter=0;
+		let score=0;
+		return this;
+	
+	}
+	
+	//disposer
+	method void dispose() {
+		do creature.dispose();
+		do tree.dispose();
+		do Memory.deAlloc(this);
+		return;
+    }
+	
+	//jumps the creature
+    method void jump() {
+		let isUp=true;
+        if (direction = 1) { 
+			if (tick=30){
+			do creature.moveDown();
+			}
+			do creature.moveUp();
+		}
+        return;
+    }
+	
+	//moves the trees
+	method boolean move(){
+		if (isUp){
+		   let tick=tick+1;
+		}
+		if(tock>5){
+			let speed=speed-5;
+			do tree.setSpeed(speed);
+			do tree1.setSpeed(speed);
+			do tree2.setSpeed(speed);
+			let tock=0;
+		}
+		do tree.moveLeft();
+		do tree1.moveLeft();
+		do tree2.moveLeft();
+		if( (gameOver(tree))| (gameOver(tree1))|(gameOver(tree2))){
+			return true;
+		}
+		return false;
+	}
+	
+	//runs the game
+	method int run() {
+		var char key;
+		let key = 0; 
+		while (true) {
+			if(move()){
+				do dispose();
+				return score;
+			}
+         
+			while (key = 0) {
+				let direction = 0;
+				let key = Keyboard.keyPressed();
+				if(move()){
+					do dispose();
+					return score;
+				}
+			}
+			
+			if (key = 131) { // up arrow
+				let direction = 1;
+			}   
+			
+			do jump();
+			
+			while(~(tick=30)){
+				if(move()){
+					do dispose();
+					return score;
+				}
+			}
+			
+			do creature.moveDown();
+			let isUp=false;
+			let tick=0;
+			do isOutOfRange(tree);
+			do isOutOfRange(tree1);
+			do isOutOfRange(tree2);
+			let key = Keyboard.keyPressed();
+		} 
+		return score;
+	}
+   
+    //checks if tree is out of range
+	method void isOutOfRange(Tree tree){
+		if(tree.getX() < 0){
+			let tree3 = tree;
+			let isOutOfRange = true;
+			do tree.setX(511);
+			let score = score + 1;
+			let tock = tock + 1;
+		}
+		return;
+    }
+   
+   //checks if the creature is touching the tree
+	method boolean gameOver(Tree tree){
+	    if(creature.isInArea(tree.getX(),tree.getX()+16)){
+			let exit=true;
+			return true;
+		}
+		return false;
+	}
+   
+}

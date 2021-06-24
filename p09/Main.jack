@@ -1,0 +1,35 @@
+class Main {
+    function void main() {
+	
+        var Game game;
+		var int score,key;
+		var boolean exit;
+		var int direction;
+		var GameOver gameOver;
+		do Output.println();
+		do Output.println();
+		do Output.printString("              Welcome to the 'no internet game'");
+		do Output.println();
+		do Output.println();
+		do Output.printString("         In the game in order to jump press on up arrow");
+		do Output.println();
+		do Output.println();
+		do Output.printString("           Make sure not to bump in to the trees...");
+		do Output.println();
+		do Output.println();
+		do Output.printString("                       Have fun!!!!!");
+		do Output.println();
+		do Sys.wait(1000);
+		
+        let game = Game.new();
+		
+		//the game starts running
+		let score = game.run();
+		
+		//calles game over once game stoped runnibg
+		let gameOver=GameOver.new(score);
+		
+		return;
+    }
+}
+ 

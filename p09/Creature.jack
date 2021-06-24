@@ -1,0 +1,222 @@
+class Creature {
+
+	field int x,y,location,memAddress;
+
+	//constructor
+	constructor Creature new(int nx, int ny) {
+		let x = nx;
+		let y = ny;
+		let location = (32 * y) + Math.divide(x, 16);
+		do draw();
+		return this;
+    }
+   
+    //disposer
+    method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+    }
+   
+	//returns the location of the creature
+    method int getLocation(){
+		return location;
+    }
+   
+   //checks if the creature is overlaping a tree 
+	method boolean isInArea(int x1,int x2){
+   
+		if(((x1>(x-1)) & (x1<(x+31))) | ((x2>(x-1)) & (x2<(x+31)))){
+			if(y>215){
+				return true;
+			}
+		}
+		return false;
+    }
+   
+    //returns the x of the creature
+	method int getX(){
+		return x;
+    }
+   
+    //returns the y of the creature
+	method int getY(){
+		return y;
+    }
+   
+   //draws the creature on the screen
+    method void draw() {
+		//left side
+		let memAddress = 16384+(32*y)+Math.divide(x-16, 16);
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 0);
+		do Memory.poke(memAddress+96, 0);
+		do Memory.poke(memAddress+128, 0);
+		do Memory.poke(memAddress+160, 0);
+		do Memory.poke(memAddress+192, 0);
+		do Memory.poke(memAddress+224, 0);
+		do Memory.poke(memAddress+256, 3);
+		do Memory.poke(memAddress+288, -32765);
+		do Memory.poke(memAddress+320, -16381);
+		do Memory.poke(memAddress+352, -2045);
+		do Memory.poke(memAddress+384, -1017);
+		do Memory.poke(memAddress+416, -505);
+		do Memory.poke(memAddress+448, -481);
+		do Memory.poke(memAddress+480, -481);
+		do Memory.poke(memAddress+512+0, -1);
+		do Memory.poke(memAddress+512+32, -1);
+		do Memory.poke(memAddress+512+64, -1);
+		do Memory.poke(memAddress+512+96, -1);
+		do Memory.poke(memAddress+512+128, -1);
+		do Memory.poke(memAddress+512+160, -4);
+		do Memory.poke(memAddress+512+192, -8);
+		do Memory.poke(memAddress+512+224, -16);
+		do Memory.poke(memAddress+512+256, 16352);
+		do Memory.poke(memAddress+512+288, 4032);
+		do Memory.poke(memAddress+512+320, 1792);
+		do Memory.poke(memAddress+512+352, 1792);
+		do Memory.poke(memAddress+512+384, 768);
+		do Memory.poke(memAddress+512+416, 768);
+		do Memory.poke(memAddress+512+448, 3840);
+		do Memory.poke(memAddress+512+480, 3840);
+		do drawRight();
+		return;
+	}
+
+	method void drawRight(){
+		//right side
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 16380);
+		do Memory.poke(memAddress+32, 32766);
+		do Memory.poke(memAddress+64, 32742);
+		do Memory.poke(memAddress+96, 32742);
+		do Memory.poke(memAddress+128, 32766);
+		do Memory.poke(memAddress+160, 32766);
+		do Memory.poke(memAddress+192, 32766);
+		do Memory.poke(memAddress+224, 510);
+		do Memory.poke(memAddress+256, 510);
+		do Memory.poke(memAddress+288, 16383);
+		do Memory.poke(memAddress+320, 255);
+		do Memory.poke(memAddress+352, 255);
+		do Memory.poke(memAddress+384, 255);
+		do Memory.poke(memAddress+416, 4095);
+		do Memory.poke(memAddress+448, 2559);
+		do Memory.poke(memAddress+480, 2559);
+		do Memory.poke(memAddress+512+0, 511);
+		do Memory.poke(memAddress+512+32, 511);
+		do Memory.poke(memAddress+512+64, 511);
+		do Memory.poke(memAddress+512+96, 511);
+		do Memory.poke(memAddress+512+128, 511);
+		do Memory.poke(memAddress+512+160, 255);
+		do Memory.poke(memAddress+512+192, 255);
+		do Memory.poke(memAddress+512+224, 127);
+		do Memory.poke(memAddress+512+256, 126);
+		do Memory.poke(memAddress+512+288, 62);
+		do Memory.poke(memAddress+512+320, 24);
+		do Memory.poke(memAddress+512+352, 24);
+		do Memory.poke(memAddress+512+384, 24);
+		do Memory.poke(memAddress+512+416, 24);
+		do Memory.poke(memAddress+512+448, 120);
+		do Memory.poke(memAddress+512+480, 120);
+		return;
+	}
+	
+	//erases the creature
+    method void erase() {
+		//erases the left side
+		let memAddress = 16384+(32*y)+Math.divide(x-16, 16);
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 0);
+		do Memory.poke(memAddress+96, 0);
+		do Memory.poke(memAddress+128, 0);
+		do Memory.poke(memAddress+160, 0);
+		do Memory.poke(memAddress+192, 0);
+		do Memory.poke(memAddress+224, 0);
+		do Memory.poke(memAddress+256, 0);
+		do Memory.poke(memAddress+288, 0);
+		do Memory.poke(memAddress+320, 0);
+		do Memory.poke(memAddress+352, 0);
+		do Memory.poke(memAddress+384, 0);
+		do Memory.poke(memAddress+416, 0);
+		do Memory.poke(memAddress+448, 0);
+		do Memory.poke(memAddress+480, 0);
+		do Memory.poke(memAddress+512+0, 0);
+		do Memory.poke(memAddress+512+32, 0);
+		do Memory.poke(memAddress+512+64, 0);
+		do Memory.poke(memAddress+512+96, 0);
+		do Memory.poke(memAddress+512+128, 0);
+		do Memory.poke(memAddress+512+160, 0);
+		do Memory.poke(memAddress+512+192, 0);
+		do Memory.poke(memAddress+512+224, 0);
+		do Memory.poke(memAddress+512+256, 0);
+		do Memory.poke(memAddress+512+288, 0);
+		do Memory.poke(memAddress+512+320, 0);
+		do Memory.poke(memAddress+512+352, 0);
+		do Memory.poke(memAddress+512+384, 0);
+		do Memory.poke(memAddress+512+416, 0);
+		do Memory.poke(memAddress+512+448, 0);
+		do Memory.poke(memAddress+512+480, 0);
+		do eraseRight();
+		return;
+	}
+
+	method void eraseRight(){
+		//erases the right side
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 0);
+		do Memory.poke(memAddress+96, 0);
+		do Memory.poke(memAddress+128, 0);
+		do Memory.poke(memAddress+160, 0);
+		do Memory.poke(memAddress+192, 0);
+		do Memory.poke(memAddress+224, 0);
+		do Memory.poke(memAddress+256, 0);
+		do Memory.poke(memAddress+288, 0);
+		do Memory.poke(memAddress+320, 0);
+		do Memory.poke(memAddress+352, 0);
+		do Memory.poke(memAddress+384, 0);
+		do Memory.poke(memAddress+416, 0);
+		do Memory.poke(memAddress+448, 0);
+		do Memory.poke(memAddress+480, 0);
+		do Memory.poke(memAddress+512+0, 0);
+		do Memory.poke(memAddress+512+32, 0);
+		do Memory.poke(memAddress+512+64, 0);
+		do Memory.poke(memAddress+512+96, 0);
+		do Memory.poke(memAddress+512+128, 0);
+		do Memory.poke(memAddress+512+160, 0);
+		do Memory.poke(memAddress+512+192, 0);
+		do Memory.poke(memAddress+512+224, 0);
+		do Memory.poke(memAddress+512+256, 0);
+		do Memory.poke(memAddress+512+288, 0);
+		do Memory.poke(memAddress+512+320, 0);
+		do Memory.poke(memAddress+512+352, 0);
+		do Memory.poke(memAddress+512+384, 0);
+		do Memory.poke(memAddress+512+416, 0);
+		do Memory.poke(memAddress+512+448, 0);
+		do Memory.poke(memAddress+512+480, 0);
+		return;
+    }
+   
+    //moves the creature down
+    method void moveDown() {
+	    do erase();
+		let y = y+40;
+		let location = (32 * y) + Math.divide(x, 16);		 
+        do draw();
+		return;
+    }
+	
+	//moves the creature up
+    method void moveUp() {
+        if (y > 1) {
+			do erase();
+		    let y = y-40;
+		    let location = (32 * y) + Math.divide(x, 16);
+            do draw();
+        }
+		return;
+    }
+
+}
